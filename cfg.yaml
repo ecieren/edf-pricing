@@ -1,4 +1,24 @@
+app:
+  data_dir: &data_dir "data"
+
+logging:
+  # log period (ms)
+  period: 999999
+  logfile: false
+  # in [debug, info, warning, error, critical]
+  logfilelevel: debug
+  logfilename: ""
+  # max size in Bytes (104857600 is 100 Mo)
+  logfilesize: 104857600
+  # at least 2 files are needed for a real rotating buffer
+  logfilenum: 2
+  logstream: true
+  # in [debug, info, warning, error, critical]
+  logstreamlevel: debug
+
 tempo_calendar:
   start: "2023-01-01"
   end: "2025-12-31"
-  file: ["data", "tempo_calendar.csv"]
+  file: [ *data_dir, "tempo_calendar.csv" ]
+
+pricing: ~

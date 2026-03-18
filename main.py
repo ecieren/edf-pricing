@@ -1,30 +1,40 @@
+import os
+from typing import Dict
+
 import yaml
+
+import logging_ as logging
+import tempo_calendar
+
+
+def read_cfg(filename: str) -> Dict:
+    """Read and process config file."""
+
+    # read file
+    cfg = yaml.safe_load(open(filename, "r"))
+
+    # create dirs
+    if not os.path.isdir(cfg["app"]["data_dir"]):
+        os.mkdir(cfg["app"]["data_dir"])
+
+    # adjust path to current os
+    cfg["tempo_calendar"]["file"] = os.path.join(*cfg["tempo_calendar"]["file"])
+
+    return cfg
+
 
 if __name__ == "__main__":
 
     filename = "cfg.yaml"
-    cfg = yaml.safe_load(open(filename, "r"))
+    cfg_ = read_cfg(filename)
 
-    # ---
-    import datetime
-    import os
-    import pandas as pd
+    logging.init(cfg_["logging"])
+    logging.info("*** Welcome to edf-pricing ! ***")
 
-    filename = cfg["tempo_calendar"]["file"]
-    start = datetime.datetime.fromisoformat(cfg["tempo_calendar"]["start"])
-    end = datetime.datetime.fromisoformat(cfg["tempo_calendar"]["end"])
+    # -- work in progress
+    cfg = cfg_["tempo_calendar"]
+    cal = tempo_calendar.get(cfg_["tempo_calendar"])
 
-
-    # load tempo calendar, check start/end dates (if it exists)
-    if os.path.exists(filename):
-        tempo = pd.read_csv(filename)
-        tempo_start = tempo["date"].min()
-        tempo_end = tempo["date"].max()
-    else:
-        tempo_start = None
-        tempo_end = None
-    # compare to requested start/end to check if we need to request more data
-
-
-
-
+    # -- end ------------------------------------------------------------------
+    logging.info("*** Edf-pricing over, goodbye ! ***")
+    logging.finalize()
