@@ -1,5 +1,5 @@
 # -- env name
-$DEF_NAME = "energy-simulator"
+$DEF_NAME = "edf-pricing"
 
 # $PYTHON_VERSION = "--python-preference=system"
 # $PYTHON_VERSION = "--python 3.11"
@@ -36,9 +36,10 @@ Invoke-Expression "uv venv --clear $VENV_PATH $PYTHON_VERSION"
 uv pip install --upgrade pip
 
 # -- install requirements
-uv pip install -r urequirements.txt
+uv pip compile requirements.in --exclude-newer 2026-01-31 > requirements.txt
+uv pip install -r requirements.txt
 
-# # -- install local package
+# # -- install local package << MAYBE LATER ?
 # if (Test-Path "build") { Remove-Item -Recurse -Force "build" }
 # uv pip install .[examples,dev]
 
