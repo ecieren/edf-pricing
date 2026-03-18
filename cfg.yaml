@@ -69,7 +69,6 @@ pricing:
 
   tarif-bleu-hc:
     puissance:
-      - 3
       - 6
       - 9
       - 12
@@ -108,7 +107,6 @@ pricing:
 
   tarif-bleu-tempo:
     puissance:
-      - 3
       - 6
       - 9
       - 12
