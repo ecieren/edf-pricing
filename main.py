@@ -3,6 +3,7 @@ from typing import Dict
 
 import yaml
 
+import consumption
 import logging_ as logging
 import tempo_calendar
 
@@ -19,6 +20,13 @@ def read_cfg(filename: str) -> Dict:
 
     # adjust path to current os
     cfg["tempo_calendar"]["file"] = os.path.join(*cfg["tempo_calendar"]["file"])
+    cfg["consumption"]["file"] = os.path.join(*cfg["consumption"]["file"])
+
+    # set default args
+    cfg_ = cfg["consumption"]
+    for k in ["encoding", "sep", "skiprows"]:
+        if k not in cfg_:
+            cfg_[k] = None
 
     return cfg
 
@@ -26,14 +34,16 @@ def read_cfg(filename: str) -> Dict:
 if __name__ == "__main__":
 
     filename = "cfg.yaml"
-    cfg_ = read_cfg(filename)
+    cfg = read_cfg(filename)
 
-    logging.init(cfg_["logging"])
+    logging.init(cfg["logging"])
     logging.info("*** Welcome to edf-pricing ! ***")
 
-    # -- work in progress
-    cfg = cfg_["tempo_calendar"]
-    cal = tempo_calendar.get(cfg_["tempo_calendar"])
+    # -- work in progress (1)
+    cal = tempo_calendar.get(cfg["tempo_calendar"])
+
+    # -- work in progress (2)
+    cns = consumption.read(cfg["consumption"])
 
     # -- end ------------------------------------------------------------------
     logging.info("*** Edf-pricing over, goodbye ! ***")

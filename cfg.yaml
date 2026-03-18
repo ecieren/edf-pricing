@@ -1,24 +1,244 @@
 app:
-  data_dir: &data_dir "data"
+  data_dir: &data_dir data
 
 logging:
   # log period (ms)
   period: 999999
   logfile: false
-  # in [debug, info, warning, error, critical]
+  # level in [debug, info, warning, error, critical]
   logfilelevel: debug
-  logfilename: ""
+  logfilename: ''
   # max size in Bytes (104857600 is 100 Mo)
   logfilesize: 104857600
   # at least 2 files are needed for a real rotating buffer
   logfilenum: 2
   logstream: true
-  # in [debug, info, warning, error, critical]
+  # level in [debug, info, warning, error, critical]
   logstreamlevel: debug
 
 tempo_calendar:
-  start: "2023-01-01"
-  end: "2025-12-31"
-  file: [ *data_dir, "tempo_calendar.csv" ]
+  start: '2023-01-01'
+  end: '2025-12-31'
+  file:
+    - *data_dir
+    - "tempo_calendar.csv"
 
-pricing: ~
+consumption:
+  file:
+    - *data_dir
+    - "mes-donnees-elec-004042039870-38420"
+    - "mes-puissances-atteintes-30min-004042039870-38420.csv"
+  encoding: "latin-1"
+  sep: ";"
+  skiprows: 3
+
+pricing:
+  # puissance en kVA, abonnement en EUR/ans, tarif en 0.01*EUR/kWh
+
+  tarif-bleu-base:
+    puissance:
+      - 3
+      - 6
+      - 9
+      - 12
+      - 15
+      - 18
+      - 24
+      - 30
+      - 36
+    abonnement:
+      - 144.36
+      - 187.8
+      - 234.72
+      - 279.84
+      - 322.08
+      - 365.88
+      - 458.88
+      - 544.44
+      - 630.48
+    prix:
+      - 19.4
+      - 19.4
+      - 19.27
+      - 19.27
+      - 19.27
+      - 19.27
+      - 19.27
+      - 19.27
+      - 19.27
+
+  tarif-bleu-hc:
+    puissance:
+      - 3
+      - 6
+      - 9
+      - 12
+      - 15
+      - 18
+      - 24
+      - 30
+      - 36
+    abonnement:
+      - 187.8
+      - 234.72
+      - 279.84
+      - 322.08
+      - 365.88
+      - 458.88
+      - 544.44
+      - 630.48
+    prix_hp:
+      - 20.65
+      - 20.65
+      - 20.65
+      - 20.65
+      - 20.65
+      - 20.65
+      - 20.65
+      - 20.65
+    prix_hc:
+      - 15.79
+      - 15.79
+      - 15.79
+      - 15.79
+      - 15.79
+      - 15.79
+      - 15.79
+      - 15.79
+
+  tarif-bleu-tempo:
+    puissance:
+      - 3
+      - 6
+      - 9
+      - 12
+      - 15
+      - 18
+      - 30
+      - 36
+    abonnement:
+      - 187.08
+      - 232.56
+      - 276.84
+      - 317.64
+      - 360.48
+      - 536.76
+      - 629.04
+    prix_bleu_hp:
+      - 13.25
+      - 13.25
+      - 13.25
+      - 13.25
+      - 13.25
+      - 13.25
+      - 13.25
+    prix_bleu_hc:
+      - 16.12
+      - 16.12
+      - 16.12
+      - 16.12
+      - 16.12
+      - 16.12
+      - 16.12
+    prix_blanc_hp:
+      - 14.99
+      - 14.99
+      - 14.99
+      - 14.99
+      - 14.99
+      - 14.99
+      - 14.99
+    prix_blanc_hc:
+      - 18.71
+      - 18.71
+      - 18.71
+      - 18.71
+      - 18.71
+      - 18.71
+      - 18.71
+    prix_rouge_hp:
+      - 15.75
+      - 15.75
+      - 15.75
+      - 15.75
+      - 15.75
+      - 15.75
+      - 15.75
+    prix_rouge_hc:
+      - 70.6
+      - 70.6
+      - 70.6
+      - 70.6
+      - 70.6
+      - 70.6
+      - 70.6
+
+  zen-fixe-base:
+    puissance:
+      - 3
+      - 6
+      - 9
+      - 12
+      - 15
+      - 18
+      - 24
+      - 30
+      - 36
+    abonnement:
+      - 135
+      - 177.36
+      - 221.88
+      - 266.52
+      - 308.88
+      - 350.76
+      - 442.08
+      - 528.84
+      - 618
+    prix:
+      - 17.74
+      - 17.74
+      - 17.74
+      - 17.74
+      - 17.74
+      - 17.74
+      - 17.74
+      - 17.74
+      - 17.74
+
+  zen-fixe-base-hc:
+    puissance:
+      - 6
+      - 9
+      - 12
+      - 15
+      - 18
+      - 24
+      - 30
+      - 36
+    abonnement:
+      - 180.6
+      - 226.92
+      - 271.8
+      - 314.04
+      - 357.72
+      - 450.24
+      - 535.8
+      - 621.84
+    prix_hp:
+      - 18.88
+      - 18.88
+      - 18.88
+      - 18.88
+      - 18.88
+      - 18.88
+      - 18.88
+      - 18.88
+    prix_hc:
+      - 14.96
+      - 14.96
+      - 14.96
+      - 14.96
+      - 14.96
+      - 14.96
+      - 14.96
+      - 14.96

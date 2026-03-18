@@ -133,9 +133,12 @@ def get(cfg: Dict) -> pd.DataFrame:
     logging.debug(f"current calendar sits between {cal_start} and {cal_end}")
 
     # fill missing values, save
+    logging.debug(f"required dates sits between {start} and {end}")
     if cal_start > start or cal_end < end:
         cal = _fill_missing(cal, start, end)
         cal.to_csv(filename, index=False)
+    else:
+        logging.debug(f"no missing dates between {cal_start} and {cal_end}")
 
     # keep only calendar between asked dates
     cal = cal[cal["date"] >= start]
