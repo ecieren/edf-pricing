@@ -53,7 +53,7 @@ def _format(df: pd.DataFrame) -> pd.DataFrame:
     dg.drop(columns=["periode"], inplace=True)
     # change some names
     dg.rename(
-        columns={"dateJour": "date", "codeJour": "code", "libClouleur": "color"},
+        columns={"dateJour": "date", "codeJour": "code", "libCouleur": "color"},
         inplace=True,
     )
 
